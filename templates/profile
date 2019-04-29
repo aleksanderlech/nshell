@@ -1,0 +1,32 @@
+
+#!/bin/bash
+export PS1="\[\033[38;5;82m\]\u\[$(tput bold)\]@\[$(tput sgr0)\]\H\[$(tput sgr0)\]\[\033[38;5;15m\]:\[$(tput sgr0)\]\[\033[38;5;9m\]\w\[$(tput sgr0)\]\[\033[38;5;7m\]\\$\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]"
+
+#Nshell
+alias update-nshell='sh -c "$(curl -fsSL https://raw.githubusercontent.com/aleksanderlech/nshell/master/tools/install.sh)"'
+
+#Common
+alias ls='ls --color=auto'
+alias ll='ls -la'
+alias l.='ls -d .* --color=auto'
+alias untar='tar -zxvf '
+
+alias java='docker run --rm -i arm32v7/openjdk java'
+alias node='docker run --rm arm32v7/node node'
+alias groovy='docker run --rm arm32v7/groovy groovy'
+
+function unrar() {
+    if [ "$1" == "" ]; then 
+        echo "No arguments given"
+        return;
+    fi
+
+    FOLDER=`dirname $1`
+    FILE=`basename $1`
+
+    if [ "$FOLDER" == "." ]; then
+        FOLDER=$PWD
+    fi
+
+    docker run --rm -v "$FOLDER:/files" dachaz/unrar-armhf e -r $FILE
+}
